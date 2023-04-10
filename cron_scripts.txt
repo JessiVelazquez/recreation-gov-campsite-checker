@@ -1,0 +1,1 @@
+*/1 * * * * /usr/bin/python3 /Users/jessivelazquez/Documents/projects/recreation-gov-campsite-checker/camping.py --start-date 2023-07-20 --end-date 2023-07-30 --parks 233303 --show-campsite-info --nights 2 >> /Users/jessivelazquez/Desktop/bot_outputs.log 2>&1
