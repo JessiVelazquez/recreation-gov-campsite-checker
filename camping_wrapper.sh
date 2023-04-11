@@ -1,0 +1,3 @@
+#!/bin/bash
+export PATH=/opt/homebrew/opt/openssl@1.1/bin:/usr/local/bin/python3.11:/Users/jessivelazquez/.nvm/versions/node/v19.8.1/bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin/code:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+/usr/bin/python3 /Users/jessivelazquez/Documents/projects/recreation-gov-campsite-checker/camping.py --start-date 2023-07-20 --end-date 2023-07-30 --parks 233303 --show-campsite-info --nights 2 >> /Users/jessivelazquez/Desktop/bot_outputs.log 2>&1
