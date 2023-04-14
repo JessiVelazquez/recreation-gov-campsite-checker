@@ -3,7 +3,12 @@
 
 import json
 import logging
+import os
+from dotenv import load_dotenv
 import sys
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from collections import defaultdict
 from datetime import datetime, timedelta
 from itertools import count, groupby
@@ -23,6 +28,17 @@ log_formatter = logging.Formatter(
 sh = logging.StreamHandler()
 sh.setFormatter(log_formatter)
 LOG.addHandler(sh)
+
+# Load the environment variables from the .env file
+load_dotenv()
+
+# Access the variables
+api_key = os.getenv('API_KEY')
+
+# Set up your email and password
+from_email = os.getenv('FROM_EMAIL')
+password = os.getenv('PASSWORD')
+to_email = os.getenv('TO_EMAIL')
 
 
 def get_park_information(
@@ -318,6 +334,28 @@ def main(parks, json_output=False):
             args.show_campsite_info,
         )
     print(output)
+
+    if has_availabilities:
+
+      # Compose Email
+      msg = MIMEMultipart()
+      msg["From"] = from_email
+      msg["To"] = to_email
+      msg["Subject"] = "BOT SUCCESS!!"
+      body = output
+      msg.attach(MIMEText(body, "plain"))
+
+      print('msg: ', msg)
+
+      # Send Email
+      try:
+          with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+              server.login(from_email, password)
+              server.sendmail(from_email, to_email, msg.as_string())
+              print("Email sent successfully!")
+      except Exception as e:
+          print(f"Error sending email: {e}")
+
     return has_availabilities
 
 
