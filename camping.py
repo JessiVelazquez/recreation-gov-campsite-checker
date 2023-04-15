@@ -29,13 +29,8 @@ sh = logging.StreamHandler()
 sh.setFormatter(log_formatter)
 LOG.addHandler(sh)
 
-# Load the environment variables from the .env file
+# Load variables for email
 load_dotenv()
-
-# Access the variables
-api_key = os.getenv('API_KEY')
-
-# Set up your email and password
 from_email = os.getenv('FROM_EMAIL')
 password = os.getenv('PASSWORD')
 to_email = os.getenv('TO_EMAIL')
@@ -336,7 +331,7 @@ def main(parks, json_output=False):
     print(output)
 
     if has_availabilities:
-
+      
       # Compose Email
       msg = MIMEMultipart()
       msg["From"] = from_email
@@ -344,8 +339,6 @@ def main(parks, json_output=False):
       msg["Subject"] = "BOT SUCCESS!!"
       body = output
       msg.attach(MIMEText(body, "plain"))
-
-      print('msg: ', msg)
 
       # Send Email
       try:
